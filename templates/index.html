@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>داروخانه آنلاین</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- پنل کناری سمت راست -->
+    <div class="sidebar">
+        <h3>منو</h3>
+        <ul>
+            <li><a href="/">فروشگاه</a></li>
+            <li><a href="/cart">سبد خرید</a></li>
+            {% if session.get('admin_logged_in') %}
+            <li><a href="/admin">پنل ادمین</a></li>
+            <li><a href="/logout">خروج ادمین</a></li>
+            {% else %}
+            <li><a href="/login">ورود ادمین</a></li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <!-- محتوا -->
+    <div class="main-content">
+        <h1>داروخانه آنلاین</h1>
+        <div class="products">
+            {% for product in products %}
+            <div class="product">
+                <img src="{{ product['image'] }}" alt="{{ product['name'] }}">
+                <h3>{{ product['name'] }}</h3>
+                <p>{{ product['description'] }}</p>
+                <p>قیمت: {{ product['price'] }} تومان</p>
+                <a href="{{ url_for('add_to_cart', product_id=product['id']) }}">
+                    <button>افزودن به سبد خرید</button>
+                </a>
+            </div>
+            {% else %}
+            <p>هیچ محصولی موجود نیست!</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

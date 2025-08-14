@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>پنل ادمین</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>پنل ادمین</h1>
+        <a href="/">بازگشت به فروشگاه</a>
+    </header>
+
+    <div class="admin-form">
+        <form method="POST">
+            <input type="text" name="name" placeholder="نام محصول" required>
+            <input type="text" name="description" placeholder="توضیح کوتاه">
+            <input type="number" name="price" placeholder="قیمت" required>
+            <input type="text" name="image" placeholder="لینک تصویر">
+            <button type="submit">افزودن محصول</button>
+        </form>
+    </div>
+
+    <h2>لیست محصولات</h2>
+    <ul>
+        {% for product in products %}
+        <li>
+            {{ product['name'] }} - {{ product['price'] }} تومان
+            <a href="{{ url_for('delete', id=product['id']) }}">حذف</a>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
